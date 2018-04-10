@@ -96,6 +96,10 @@ RUN set -xe \
 		libxml2-dev \
 		sqlite-dev \
 	\
+# Add support for argon2 AFTER other items have been installed
+	&& echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+	&& apk add --no-cache argon2 argon2-dev \
+	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
 		LDFLAGS="$PHP_LDFLAGS" \
@@ -117,6 +121,7 @@ RUN set -xe \
 		--enable-mysqlnd \
 # https://wiki.php.net/rfc/libsodium
 		--with-sodium=shared \
+		--with-password-argon2 \
 		\
 		--with-curl \
 		--with-libedit \
